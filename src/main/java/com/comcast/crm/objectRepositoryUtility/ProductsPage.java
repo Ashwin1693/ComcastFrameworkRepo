@@ -20,4 +20,5 @@ WebDriver driver;
 	
 	@FindBy (name= "searchBtn")
 	private WebElement ele3;
+	
 }
