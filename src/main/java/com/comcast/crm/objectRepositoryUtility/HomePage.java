@@ -32,7 +32,14 @@ public class HomePage {
 	
 	@FindBy(linkText="Sign Out")
 	private WebElement SignOutLink;
+	
+	@FindBy(linkText="Products")
+	private WebElement ProductsLink;
 
+
+	public WebElement getProductsLink() {
+		return ProductsLink;
+	}
 
 	public WebElement getAdminImg() {
 		return AdminImg;
@@ -75,4 +82,24 @@ public class HomePage {
 		 }
 		 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	
