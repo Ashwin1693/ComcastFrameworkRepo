@@ -33,7 +33,7 @@ public class HomePage {
 	@FindBy(linkText="Sign Out")
 	private WebElement SignOutLink;
 	
-	@FindBy(linkText="Products ")
+	@FindBy(linkText="Products")
 	private WebElement ProductsLink;
 
 
