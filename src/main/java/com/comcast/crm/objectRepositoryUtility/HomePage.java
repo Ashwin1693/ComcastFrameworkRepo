@@ -36,7 +36,6 @@ public class HomePage {
 	@FindBy(linkText="Products")
 	private WebElement ProductsLink;
 
-
 	public WebElement getProductsLink() {
 		return ProductsLink;
 	}
