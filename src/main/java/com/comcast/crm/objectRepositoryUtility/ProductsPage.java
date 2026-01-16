@@ -12,6 +12,7 @@ WebDriver driver;
 	public ProductsPage(WebDriver driver) {
 		this.driver = driver;
 		PageFactory.initElements(driver,this);
+		
 	}
 	
 	@FindBy (xpath="//img[@alt='Create Product...']")
