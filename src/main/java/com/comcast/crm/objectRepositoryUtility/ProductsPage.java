@@ -17,5 +17,6 @@ WebDriver driver;
 	@FindBy (xpath="//img[@alt='Create Product...']")
 	private WebElement CreateProductBtnImg;
 	
-	
+	@FindBy (name= "searchBtn")
+	private WebElement ele3;
 }
