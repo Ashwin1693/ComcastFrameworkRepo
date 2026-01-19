@@ -17,7 +17,7 @@ import com.comcast.crm.objectRepositoryUtility.OrganizationsPage;
 import junit.framework.Assert;
 
 @Listeners(com.comcast.crm.generic.listenerUtility.ListenerImpClass.class)
-public class CreateOrganisationFinalTest extends BaseClass {
+public class CreateOrganisationTest extends BaseClass {
 	@Test(groups = "smoketest")
 
 	public void createOrgTest() throws IOException, InterruptedException {

@@ -17,5 +17,4 @@ WebDriver driver;
 	@FindBy (xpath="//img[@alt='Create Product...']")
 	private WebElement CreateProductBtnImg;
 	
-	
 }
