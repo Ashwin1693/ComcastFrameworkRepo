@@ -26,10 +26,9 @@ public class CreateOrganisationTest extends BaseClass {
 		/* Read testscript data from excel file for creating Organization */
 
 		String shipAdd = eLib.getDataFromExcel("Contact", 7, 4) + jLib.getRandomNumber();
-		String Industry = eLib.getDataFromExcel("Contact", 7, 6);
-
-		String orgName = eLib.getDataFromExcel("Contact", 7, 2).toString()+ jLib.getRandomNumber();
-
+		String Industry = eLib.getDataFromExcel("Org", 4, 3);
+		String orgName = eLib.getDataFromExcel("Contact", 7, 2).toString() + jLib.getRandomNumber();
+		
 		/* Step - Navigate to organization module */
 		UtilityClassObject.getTest().log(Status.INFO, "Navigate to Org page");
 		HomePage hp = new HomePage(driver);
@@ -58,7 +57,7 @@ public class CreateOrganisationTest extends BaseClass {
 	public void createOrgWithPhoneNumberTest() throws EncryptedDocumentException, IOException, InterruptedException {
 		// read testscript data from the Excel file
 		UtilityClassObject.getTest().log(Status.INFO, "read data from the excel");
-		String orgName = eLib.getDataFromExcel("Org", 4, 2) + jLib.getRandomNumber();
+		String orgName = eLib.getDataFromExcel("Contact", 7, 2).toString() + jLib.getRandomNumber();
 		String phoneNumber = eLib.getDataFromExcel("Org", 7, 3);
 		String shipAdd = eLib.getDataFromExcel("Contact", 7, 4) + jLib.getRandomNumber();
 		// Step 2 - Navigate to Organization module
@@ -115,7 +114,7 @@ public class CreateOrganisationTest extends BaseClass {
 		System.out.println(oip.getIndustryMsg().getText());
 		String actIndustry = oip.getIndustryMsg().getText();
 		Assert.assertEquals(true, actIndustry.contains(Industry));
-		UtilityClassObject.getTest().log(Status.PASS, actIndustry + " ==>Verify the Industry");
+		UtilityClassObject.getTest().log(Status.PASS, actIndustry + "=====>Verify the Industry");
 
 	}
 }

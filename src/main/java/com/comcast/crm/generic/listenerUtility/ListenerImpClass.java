@@ -9,18 +9,19 @@ import org.testng.ISuiteListener;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
+import org.testng.Reporter;
+
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import com.aventstack.extentreports.reporter.configuration.Theme;
-import com.comcast.crm.basetest.BaseClass;
 import com.comcast.crm.generic.WebDriverUtility.UtilityClassObject;
 
 public class ListenerImpClass implements ITestListener, ISuiteListener {
 
 	public static ExtentTest test;
-	public ExtentReports report;
+	public ExtentReports reports;
 
 //We have implemented this method to configure the report
 	@Override
@@ -28,7 +29,7 @@ public class ListenerImpClass implements ITestListener, ISuiteListener {
 		System.out.println("Report Configuration");
 		String time = new Date().toString().replace(" ", "_").replace(":", "_");
 
-		ISuiteListener.super.onStart(suite);
+		//ISuiteListener.super.onStart(suite);
 		// Spark report config
 
 		ExtentSparkReporter spark = new ExtentSparkReporter("./AdvanceReport/report_"+time+".html");
@@ -37,76 +38,77 @@ public class ListenerImpClass implements ITestListener, ISuiteListener {
 		spark.config().setTheme(Theme.STANDARD);
 
 		// add Environment info and create test
-		report = new ExtentReports();
-		report.attachReporter(spark);
-		report.setSystemInfo("OS", "Windows-11");
-		report.setSystemInfo("BROWSER", "Chrome-11");
+		reports = new ExtentReports();
+		reports.attachReporter(spark);
+		reports.setSystemInfo("OS", "Windows-11");
+		reports.setSystemInfo("BROWSER", "Chrome-11");
+		Reporter.log("onStart of Suite",true);
 	}
 
 	@Override
 	public void onFinish(ISuite suite) {
 		System.out.println("Report Back Up");
-		ISuiteListener.super.onFinish(suite);
-		report.flush();
+		Reporter.log("onFinish of Suite",true);
+		reports.flush();
 	}
 
 //To create a test case inside the extentReport
 	@Override
 	public void onTestStart(ITestResult result) {
-		System.out.println("===START===>" + result.getMethod().getMethodName() + "<===START===");
-		test = report.createTest(result.getMethod().getMethodName());
+		
+		test = reports.createTest(result.getMethod().getMethodName());
+		test.log(Status.INFO,"==========="+result.getMethod().getMethodName()+"========STARTED========");
+		Reporter.log("onTestStar of ITestresult",true);
 		UtilityClassObject.setTest(test);
-		test.log(Status.INFO, result.getMethod().getMethodName()+"======>STARTED<======");
-		ITestListener.super.onTestStart(result);
 	}
 
 	@Override
 	public void onTestSuccess(ITestResult result) {
-		System.out.println("====END===>" + result.getMethod().getMethodName() + "<====END===");
-		test.log(Status.PASS, result.getMethod().getMethodName()+"======> COMPLETED <======");
-		ITestListener.super.onTestSuccess(result);
+		System.out.println(result.getMethod().getMethodName() + "======success======");
+		test.log(Status.PASS,"============="+ result.getMethod().getMethodName()+"======> COMPLETED <======");
+		Reporter.log("onTestStar of ITestresult",true);
 	}
 
 	@Override
 	public void onTestFailure(ITestResult result) {
 		String TestName = result.getMethod().getMethodName();
-		TakesScreenshot eDriver = (TakesScreenshot) BaseClass.sdriver;
+		TakesScreenshot eDriver = (TakesScreenshot) UtilityClassObject.getDriver();
 		String FilePath = eDriver.getScreenshotAs(OutputType.BASE64);
 		
 		String time = new Date().toString().replace(" ", "_").replace(":", "_");
-		test.addScreenCaptureFromBase64String(FilePath, TestName + "_" + time);
-		test.log(Status.FAIL, result.getMethod().getMethodName()+"======> FAILED <======");
-		ITestListener.super.onTestFailure(result);
+		test.addScreenCaptureFromBase64String(FilePath,TestName+ time);
+		test.log(Status.FAIL,"=========="+ result.getMethod().getMethodName()+"======> FAILED <======");
+		Reporter.log("onTestStar of ITestresult",true);
 	}
 
 	@Override
 	public void onTestSkipped(ITestResult result) {
 		// TODO Auto-generated method stub
-		ITestListener.super.onTestSkipped(result);
+		Reporter.log("onTest Skipped of ITestresult",true);
 	}
 
 	@Override
 	public void onTestFailedButWithinSuccessPercentage(ITestResult result) {
 		// TODO Auto-generated method stub
-		ITestListener.super.onTestFailedButWithinSuccessPercentage(result);
+		Reporter.log("onTestFailedButWithinSuccessPercentage of ITestresult",true);
 	}
 
 	@Override
 	public void onTestFailedWithTimeout(ITestResult result) {
 		// TODO Auto-generated method stub
-		ITestListener.super.onTestFailedWithTimeout(result);
+		Reporter.log("onTestFailedWithTimeout of ITestresult",true);
 	}
 
 	@Override
 	public void onStart(ITestContext context) {
 		// TODO Auto-generated method stub
-		ITestListener.super.onStart(context);
+		Reporter.log("onStart of ITestContext ",true);
 	}
 
 	@Override
 	public void onFinish(ITestContext context) {
 		// TODO Auto-generated method stub
-		ITestListener.super.onFinish(context);
+		Reporter.log("onStart of ITestContext ",true);
 	}
 
 }

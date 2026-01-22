@@ -2,8 +2,10 @@ package com.comcast.crm.contacttest;
 
 import java.io.IOException;
 
+
 import java.time.Duration;
 import org.openqa.selenium.By;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import com.comcast.crm.basetest.BaseClass;
@@ -17,6 +19,7 @@ import com.comcast.crm.objectRepositoryUtility.OrganizationsPage;
 /**
  * @author Ashwini  
  */
+@Listeners(com.comcast.crm.generic.listenerUtility.ListenerImpClass.class)
 public class CreateContactTest extends BaseClass {
 
 	@Test(groups= {"SmokeTest"})
@@ -159,8 +162,8 @@ public class CreateContactTest extends BaseClass {
 			System.out.println(orgName + " header not verified-->FAIL");
 
 		}
-		driver.close();
-		driver.quit();
+		
+		
 
 	}
 }

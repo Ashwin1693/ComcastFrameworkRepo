@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
-  <test thread-count="5" name="Default test(failed)">
+<suite name="Failed suite [smokeSuite]" guice-stage="DEVELOPMENT">
+  <test thread-count="5" name="Test(failed)">
     <classes>
-      <class name="com.comcast.crm.OrgTest.CreateOrganisationFinalTest">
+      <class name="com.comcast.crm.contacttest.CreateContactTest">
         <methods>
           <include name="ConfigAM"/>
           <include name="ConfigBM"/>
-          <include name="createOrgTest"/>
+          <include name="createContactWithSupportDateTest"/>
           <include name="ConfigAC"/>
           <include name="ConfigAS"/>
           <include name="ConfigBC"/>
           <include name="ConfigBS"/>
         </methods>
-      </class> <!-- com.comcast.crm.OrgTest.CreateOrganisationFinalTest -->
+      </class> <!-- com.comcast.crm.contacttest.CreateContactTest -->
     </classes>
-  </test> <!-- Default test(failed) -->
-</suite> <!-- Failed suite [Default suite] -->
+  </test> <!-- Test(failed) -->
+</suite> <!-- Failed suite [smokeSuite] -->

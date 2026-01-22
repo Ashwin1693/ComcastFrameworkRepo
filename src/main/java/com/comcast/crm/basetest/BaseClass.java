@@ -25,29 +25,31 @@ import com.comcast.crm.objectRepositoryUtility.LoginPage;
 public class BaseClass {
 
 	// Object Creation
-	public DatabaseUtility dblib  = new DatabaseUtility();
-	public ExcelUtility    eLib   = new ExcelUtility();
-	public FileUtility     fLib   = new FileUtility();
-	public JavaUtility jLib = new JavaUtility();
-	public WebDriverUtility wLib = new WebDriverUtility();
-	public WebDriver driver = null;
-	public static WebDriver sdriver = null; // "s" stands to indicate it is static driver reference
+	public DatabaseUtility dblib     = new DatabaseUtility();
+	public ExcelUtility eLib         = new ExcelUtility();
+	public FileUtility fLib			 = new FileUtility();
+	public JavaUtility jLib 	     = new JavaUtility();
+	public WebDriverUtility wLib     = new WebDriverUtility();
+	public WebDriver driver          = null;
+	public static WebDriver sdriver  = null;
+	// "s" stands to indicate it is static driver reference
 
-	@BeforeSuite(groups= {"smokeTest","regressionTest"})
+	@BeforeSuite(alwaysRun = true)
 	public void ConfigBS() {
 
-		System.out.println("<=======Connect to DB=========>" + "========Report Config======");
+		System.out.println("=============Connect to DB===========" + "========Report Config======");
 		dblib.getdbConnection();
 
 	}
 
-	@BeforeClass(groups= {"smokeTest","regressionTest"})
+	@BeforeClass(alwaysRun = true)
 	public void ConfigBC() throws IOException {
 
 		System.out.println("LAUNCH the BROWSER");
 
-		String BROWSER = fLib.getDataFromPropertiesFile("browser").toString();
-
+		// String BROWSER = fLib.getDataFromPropertiesFile("browser").toString();
+		String BROWSER = System.getProperty("browser",fLib.getDataFromPropertiesFile("browser").
+				toString());
 		if (BROWSER.equals("chrome")) {
 			driver = new ChromeDriver();
 		} else if (BROWSER.equals("firefox")) {
@@ -57,41 +59,46 @@ public class BaseClass {
 		} else {
 			driver = new ChromeDriver();
 		}
-		sdriver = driver; // here we are trying to store real browser sessionID in sdriver
+		sdriver = driver;
 		UtilityClassObject.setDriver(driver);
+		System.out.println("Browser Launch");
 	}
 
-	@BeforeMethod
+	@BeforeMethod(alwaysRun = true)
 	public void ConfigBM() throws IOException {
 
 		System.out.println("LOGIN to application");
 		LoginPage lp = new LoginPage(driver);
-		String URL = fLib.getDataFromPropertiesFile("url").toString();
-		String USERNAME = fLib.getDataFromPropertiesFile("username").toString();
-		String PASSWORD = fLib.getDataFromPropertiesFile("password").toString();
+		//String URL = fLib.getDataFromPropertiesFile("url").toString();
+		//String USERNAME = fLib.getDataFromPropertiesFile("username").toString();
+		//String PASSWORD = fLib.getDataFromPropertiesFile("password").toString();
+		String URL = System.getProperty("url",fLib.getDataFromPropertiesFile("url").toString());
+		String USERNAME = System.getProperty("username",fLib.getDataFromPropertiesFile("username").toString());
+		String PASSWORD = System.getProperty("password",fLib.getDataFromPropertiesFile("password").toString());
 		lp.LoginToApp(URL, USERNAME, PASSWORD);
+		
 	}
 
-	@AfterMethod
-	public void ConfigAM() {
-
+	@AfterMethod(alwaysRun = true)
+	public void ConfigAM() throws InterruptedException {
+        Thread.sleep(1500);
 		System.out.println("LOGOUT from application");
-
 		HomePage hp = new HomePage(driver);
 		hp.logOut();
+		System.out.println("logout");
 	}
 
-	@AfterClass
+	@AfterClass(alwaysRun = true)
 	public void ConfigAC() {
 
-		System.out.println("CLOSE the BROWSER");
+		System.out.println(" Browser closed ");
 		driver.quit();
 	}
 
-	@AfterSuite
+	@AfterSuite(alwaysRun = true)
 	public void ConfigAS() {
 
-		System.out.println("CLOSE the connection with DB" + "Report Back up");
+		System.out.println("DB Connection closed");
 		dblib.closeDBConnection();
 
 	}
